@@ -52,6 +52,7 @@ export default function SignUp() {
         <InputField
           name="email"
           label="Email"
+          type="email"
           placeholder="Enter your email"
           register={register}
           error={errors.email}
