@@ -2,14 +2,19 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function SignIn() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     control,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
     defaultValues: {
@@ -20,9 +25,21 @@ export default function SignIn() {
   });
   const onSubmit = async (data: SignInFormData) => {
     try {
-      console.log("Sign-in data:", data);
+      const result = await signInWithEmail(data);
+      if (result?.success) {
+        router.replace("/");
+        router.refresh();
+      } else {
+        const message = result.message ?? "Invalid email or password";
+        setError("password", { type: "manual", message });
+        toast.error(message);
+      }
     } catch (error) {
       console.error("Sign-in error:", error);
+      toast.error("Sign-in failed. Please try again.", {
+        description:
+          error instanceof Error ? error.message : "Failed to sign in",
+      });
     }
   };
 
@@ -39,8 +56,10 @@ export default function SignIn() {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\S+@\S+$/i,
-            message: "Invalid email address",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Invalid email address",
+            },
           }}
         />
         <InputField
@@ -52,7 +71,11 @@ export default function SignIn() {
           error={errors.password}
           validation={{
             required: "Password is required",
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            pattern: {
+              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+              message:
+                "Password must be at least 8 characters long and contain letters and numbers",
+            },
             message:
               "Password must be at least 8 characters long and contain letters and numbers",
           }}

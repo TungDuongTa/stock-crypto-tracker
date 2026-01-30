@@ -4,7 +4,7 @@ import React from "react";
 import NavItems from "./NavItems";
 import UserDropDown from "./UserDropDown";
 
-export default function Header() {
+export default function Header({ user }: { user: User }) {
   return (
     <header className="sticky top-0 header">
       <div className="container header-wrapper">
@@ -20,7 +20,7 @@ export default function Header() {
         <nav className="hidden sm:block">
           <NavItems />
         </nav>
-        <UserDropDown />
+        <UserDropDown user={user} />
       </div>
     </header>
   );

@@ -19,7 +19,7 @@ export const connectToDatabase = async () => {
       "Please define the MONGODB_URI environment variable inside .env",
     );
   }
-  if (!cached.conn) {
+  if (cached.conn) {
     return cached.conn;
   }
   if (!cached.promise) {
@@ -34,4 +34,5 @@ export const connectToDatabase = async () => {
   }
 
   console.log(`MongoDB connected,${process.env.NODE_ENV}-- ${MONGODB_URI}`);
+  return cached.conn;
 };

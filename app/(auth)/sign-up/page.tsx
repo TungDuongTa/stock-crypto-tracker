@@ -4,14 +4,18 @@ import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/forms/SelectField";
 import { Button } from "@/components/ui/button";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
 import {
   INVESTMENT_GOALS,
   PREFERRED_INDUSTRIES,
   RISK_TOLERANCE_OPTIONS,
 } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function SignUp() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,9 +35,18 @@ export default function SignUp() {
   });
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      console.log("Sign-up data:", data);
+      const result = await signUpWithEmail(data);
+      if (result.success) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Sign-up error:", error);
+      toast.error("Sign-up failed. Please try again.", {
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to create an account",
+      });
     }
   };
 
@@ -42,7 +55,7 @@ export default function SignUp() {
       <h1 className="form-title">Sign Up & Personalize</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
-          name="fullname"
+          name="fullName"
           label="Full Name"
           placeholder="Enter your full name"
           register={register}
@@ -58,8 +71,10 @@ export default function SignUp() {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\S+@\S+$/i,
-            message: "Invalid email address",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Invalid email address",
+            },
           }}
         />
         <InputField
@@ -71,9 +86,11 @@ export default function SignUp() {
           error={errors.password}
           validation={{
             required: "Password is required",
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            message:
-              "Password must be at least 8 characters long and contain letters and numbers",
+            pattern: {
+              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+              message:
+                "Password must be at least 8 characters long and contain letters and numbers",
+            },
           }}
         />
         <CountrySelectField
