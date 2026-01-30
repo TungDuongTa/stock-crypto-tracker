@@ -2,8 +2,8 @@
 
 import { auth } from "../better-auth/auth";
 import { inngest } from "@/lib/inngest/client";
-import { success } from "better-auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const signUpWithEmail = async (data: SignUpFormData) => {
   try {
@@ -57,5 +57,28 @@ export const signInWithEmail = async (data: SignInFormData) => {
   } catch (error) {
     console.error("Sign-in error:", error);
     return { success: false, message: "Sign-in failed" };
+  }
+};
+export const signInSocial = async (provider) => {
+  try {
+    const response = await auth.api.signInSocial({
+      body: {
+        provider: provider,
+        callbackURL: `/`,
+      },
+    });
+
+    if (response.url) {
+      redirect(response.url);
+    }
+
+    return { success: true, message: "Successfully initiated Google sign-in" };
+  } catch (error) {
+    // Re-throw redirect errors so they work properly
+    if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) {
+      throw error;
+    }
+    console.error("Google auth error:", error);
+    return { success: false, message: "Failed to get Google auth URL" };
   }
 };

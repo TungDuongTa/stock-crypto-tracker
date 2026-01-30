@@ -1,5 +1,6 @@
 "use client";
 import FooterLink from "@/components/forms/FooterLink";
+import GoogleSignInButton from "@/components/forms/GoogleSignInButton";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
 import { signInWithEmail } from "@/lib/actions/auth.actions";
@@ -76,8 +77,6 @@ export default function SignIn() {
               message:
                 "Password must be at least 8 characters long and contain letters and numbers",
             },
-            message:
-              "Password must be at least 8 characters long and contain letters and numbers",
           }}
         />
 
@@ -93,6 +92,7 @@ export default function SignIn() {
           linkText="Sign up"
           href="/sign-up"
         />
+        <GoogleSignInButton />
       </form>
     </>
   );
