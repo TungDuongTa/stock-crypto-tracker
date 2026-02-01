@@ -59,7 +59,7 @@ export const signInWithEmail = async (data: SignInFormData) => {
     return { success: false, message: "Sign-in failed" };
   }
 };
-export const signInSocial = async (provider) => {
+export const signInSocial = async ({ provider }: { provider: string }) => {
   try {
     const response = await auth.api.signInSocial({
       body: {
@@ -69,6 +69,7 @@ export const signInSocial = async (provider) => {
     });
 
     if (response.url) {
+      console.log("data:", response);
       redirect(response.url);
     }
 

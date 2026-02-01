@@ -1,6 +1,5 @@
 "use client";
 import FooterLink from "@/components/forms/FooterLink";
-import GoogleSignInButton from "@/components/forms/GoogleSignInButton";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
 import { signInWithEmail } from "@/lib/actions/auth.actions";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import SoicalSignInButton from "@/components/forms/SoicalSignInButton";
 
 export default function SignIn() {
   const router = useRouter();
@@ -92,7 +92,7 @@ export default function SignIn() {
           linkText="Sign up"
           href="/sign-up"
         />
-        <GoogleSignInButton />
+        <SoicalSignInButton />
       </form>
     </>
   );
