@@ -56,7 +56,10 @@ export const signInWithEmail = async (data: SignInFormData) => {
     return { success: true, message: "Sign-in successful" };
   } catch (error) {
     console.error("Sign-in error:", error);
-    return { success: false, message: "Sign-in failed" };
+    return {
+      success: false,
+      message: "Email or password is not correct. Please try again",
+    };
   }
 };
 export const signInSocial = async ({ provider }: { provider: string }) => {

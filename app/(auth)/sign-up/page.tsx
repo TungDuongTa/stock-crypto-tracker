@@ -13,7 +13,8 @@ import {
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema } from "@/lib/zod/auth.schema";
 export default function SignUp() {
   const router = useRouter();
   const {
@@ -22,6 +23,7 @@ export default function SignUp() {
     control,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -60,7 +62,7 @@ export default function SignUp() {
           placeholder="Enter your full name"
           register={register}
           error={errors.fullName}
-          validation={{ required: "Full name is required", minLength: 2 }}
+          // validation={{ required: "Full name is required", minLength: 2 }}
         />
         <InputField
           name="email"
@@ -69,13 +71,13 @@ export default function SignUp() {
           placeholder="Enter your email"
           register={register}
           error={errors.email}
-          validation={{
-            required: "Email is required",
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: "Invalid email address",
-            },
-          }}
+          // validation={{
+          //   required: "Email is required",
+          //   pattern: {
+          //     value: /^\S+@\S+$/i,
+          //     message: "Invalid email address",
+          //   },
+          // }}
         />
         <InputField
           name="password"
@@ -84,21 +86,21 @@ export default function SignUp() {
           type="password"
           register={register}
           error={errors.password}
-          validation={{
-            required: "Password is required",
-            pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              message:
-                "Password must be at least 8 characters long and contain letters and numbers",
-            },
-          }}
+          // validation={{
+          //   required: "Password is required",
+          //   pattern: {
+          //     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+          //     message:
+          //       "Password must be at least 8 characters long and contain letters and numbers",
+          //   },
+          // }}
         />
         <CountrySelectField
           name="country"
           label="Country"
           control={control}
           error={errors.country}
-          required
+          // required
         />
         <SelectField
           name="investmentGoals"
@@ -107,7 +109,7 @@ export default function SignUp() {
           options={INVESTMENT_GOALS}
           control={control}
           error={errors.investmentGoals}
-          required
+          // required
         />
         <SelectField
           name="riskTolerance"
@@ -116,7 +118,7 @@ export default function SignUp() {
           options={RISK_TOLERANCE_OPTIONS}
           control={control}
           error={errors.riskTolerance}
-          required
+          // required
         />
         <SelectField
           name="preferredIndustry"
@@ -125,7 +127,7 @@ export default function SignUp() {
           options={PREFERRED_INDUSTRIES}
           control={control}
           error={errors.preferredIndustry}
-          required
+          // required
         />
         <Button
           type="submit"

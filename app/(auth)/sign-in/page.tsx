@@ -8,7 +8,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import SoicalSignInButton from "@/components/forms/SoicalSignInButton";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "@/lib/zod/auth.schema";
 export default function SignIn() {
   const router = useRouter();
   const {
@@ -18,6 +19,7 @@ export default function SignIn() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -55,13 +57,13 @@ export default function SignIn() {
           placeholder="Enter your email"
           register={register}
           error={errors.email}
-          validation={{
-            required: "Email is required",
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: "Invalid email address",
-            },
-          }}
+          // validation={{
+          //   required: "Email is required",
+          //   pattern: {
+          //     value: /^\S+@\S+$/i,
+          //     message: "Invalid email address",
+          //   },
+          // }}
         />
         <InputField
           name="password"
@@ -70,14 +72,14 @@ export default function SignIn() {
           type="password"
           register={register}
           error={errors.password}
-          validation={{
-            required: "Password is required",
-            pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              message:
-                "Password must be at least 8 characters long and contain letters and numbers",
-            },
-          }}
+          // validation={{
+          //   required: "Password is required",
+          //   pattern: {
+          //     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+          //     message:
+          //       "Password must be at least 8 characters long and contain letters and numbers",
+          //   },
+          // }}
         />
 
         <Button

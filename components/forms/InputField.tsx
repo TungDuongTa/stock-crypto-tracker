@@ -10,7 +10,7 @@ export default function InputField({
   type = "text",
   register,
   error,
-  validation,
+  // validation,
   disabled,
   value,
 }: FormInputProps) {
@@ -28,7 +28,7 @@ export default function InputField({
         className={cn("form-input", {
           "opacity-50 cursor-not-allowed": disabled,
         })}
-        {...register(name, validation)}
+        {...register(name)}
       />
       {error && <p className="text-red-500 ">{error.message}</p>}
     </div>

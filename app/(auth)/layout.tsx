@@ -1,3 +1,4 @@
+import { MeshGradientBackground } from "@/components/AuroraBackground";
 import { auth } from "@/lib/better-auth/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -31,7 +32,7 @@ export default async function Layout({
         </Link>
         <div className="pb-6 lg:pb-8 flex-1">{children}</div>
       </section>
-      <section className="auth-right-section">
+      <section className="w-full max-lg:border-t max-lg:border-gray-600 lg:w-[55%] lg:h-screen bg-gray-800 px-6 py-4 md:p-6 lg:py-12 lg:px-18 flex flex-col justify-start relative">
         <div className="z-10 relative lg:mt-4 lg:mb-16">
           <blockquote className="auth-blockquote">
             Signalist turned my watchlist into a winning list. The alerts are

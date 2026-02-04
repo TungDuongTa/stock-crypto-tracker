@@ -27,7 +27,7 @@ type CountrySelectProps = {
   label: string;
   control: Control<any>;
   error?: FieldError;
-  required?: boolean;
+  // required?: boolean;
 };
 
 const CountrySelect = ({
@@ -122,7 +122,7 @@ export const CountrySelectField = ({
   label,
   control,
   error,
-  required = false,
+  // required = false,
 }: CountrySelectProps) => {
   return (
     <div className="space-y-2">
@@ -132,9 +132,9 @@ export const CountrySelectField = ({
       <Controller
         name={name}
         control={control}
-        rules={{
-          required: required ? `Please select ${label.toLowerCase()}` : false,
-        }}
+        // rules={{
+        //   required: required ? `Please select ${label.toLowerCase()}` : false,
+        // }}
         render={({ field }) => (
           <CountrySelect value={field.value} onChange={field.onChange} />
         )}

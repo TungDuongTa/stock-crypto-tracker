@@ -15,7 +15,7 @@ export default function SelectField({
   options,
   control,
   error,
-  required = false,
+  // required = false,
 }: SelectFieldProps) {
   return (
     <div className="space-y-2">
@@ -25,9 +25,9 @@ export default function SelectField({
       <Controller
         name={name}
         control={control}
-        rules={{
-          required: required ? `Please select ${label.toLowerCase()}` : false,
-        }}
+        // rules={{
+        //   required: required ? `Please select ${label.toLowerCase()}` : false,
+        // }}
         render={({ field }) => (
           <Select value={field.value} onValueChange={field.onChange}>
             <SelectTrigger className="select-trigger">
