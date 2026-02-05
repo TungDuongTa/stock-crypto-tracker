@@ -1,6 +1,5 @@
 import TradingViewWidget from "@/components/TradingViewWidget";
 import WatchlistButton from "@/components/WatchlistButton";
-
 import {
   SYMBOL_INFO_WIDGET_CONFIG,
   CANDLE_CHART_WIDGET_CONFIG,
@@ -16,9 +15,9 @@ export default async function StockDetails({ params }: StockDetailsPageProps) {
 
   return (
     <div className="flex min-h-screen p-4 md:p-6 lg:p-8">
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+      <section className="grid grid-cols-1  lg:grid-cols-3 gap-8 w-full">
         {/* Left column */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:col-span-2">
           <TradingViewWidget
             scriptUrl={`${scriptUrl}symbol-info.js`}
             config={SYMBOL_INFO_WIDGET_CONFIG(symbol)}
@@ -57,7 +56,7 @@ export default async function StockDetails({ params }: StockDetailsPageProps) {
           />
 
           <TradingViewWidget
-            scriptUrl={`${scriptUrl}company-profile.js`}
+            scriptUrl={`${scriptUrl}symbol-profile.js`}
             config={COMPANY_PROFILE_WIDGET_CONFIG(symbol)}
             height={440}
           />

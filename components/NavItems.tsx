@@ -23,7 +23,7 @@ export default function NavItems({
           return (
             <li key="search-trigger">
               <SearchCommand
-                renderAs="text"
+                renderAs="icon"
                 label="Search stock"
                 initialStocks={initialStocks}
               />
@@ -34,7 +34,7 @@ export default function NavItems({
           <li key={href}>
             <Link
               href={href}
-              className={`hover:text-yellow-500 transition-colors ${isActive(href) ? "text-gray-100" : ""} `}
+              className={`relative after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer ${isActive(href) ? "text-gray-100" : ""} `}
             >
               {label}
             </Link>

@@ -9,7 +9,9 @@
     format("woff2");
 }
 @custom-variant dark (&:is(.dark *));
-
+html {
+  scrollbar-gutter: auto;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -461,7 +463,7 @@
 }
 
 .custom-chart.tradingview-widget-container iframe {
-  border: 1px solid #30333a;
+  border: 1px solid #000000;
   border-radius: 8px !important;
   overflow: hidden !important;
 }
