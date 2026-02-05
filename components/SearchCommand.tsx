@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/command";
 import { useDebounce } from "@/hooks/useDebounce";
 import { searchStocks } from "@/lib/actions/finhub.actions";
-import { Loader2, Star, TrendingUp } from "lucide-react";
+import { Loader2, Search, Star, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -65,13 +65,10 @@ export default function SearchCommand({
   };
   return (
     <>
-      {renderAs === "text" ? (
-        <span
-          className="cursor-pointer hover:text-yellow-500"
-          onClick={() => setOpen(true)}
-        >
+      {renderAs === "icon" ? (
+        <Search className="cursor-pointer " onClick={() => setOpen(true)}>
           {label}
-        </span>
+        </Search>
       ) : (
         <Button
           onClick={() => setOpen(true)}

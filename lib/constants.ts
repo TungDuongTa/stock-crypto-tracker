@@ -1,7 +1,7 @@
 export const NAV_ITEMS = [
   { href: "/", label: "Dashboard" },
+  { href: "/watchlist", label: "Watchlist" },
   { href: "/search", label: "Search" },
-  // { href: '/watchlist', label: 'Watchlist' },
 ];
 
 // Sign-up form select options
@@ -182,15 +182,15 @@ export const SYMBOL_INFO_WIDGET_CONFIG = (symbol: string) => ({
 export const CANDLE_CHART_WIDGET_CONFIG = (symbol: string) => ({
   allow_symbol_change: false,
   calendar: false,
-  details: true,
-  hide_side_toolbar: true,
+  details: false,
+  hide_side_toolbar: false,
   hide_top_toolbar: false,
-  hide_legend: false,
-  hide_volume: false,
+  hide_legend: true,
+  hide_volume: true,
   hotlist: false,
   interval: "D",
   locale: "en",
-  save_image: false,
+  save_image: true,
   style: 1,
   symbol: symbol.toUpperCase(),
   theme: "dark",
@@ -200,6 +200,7 @@ export const CANDLE_CHART_WIDGET_CONFIG = (symbol: string) => ({
   watchlist: [],
   withdateranges: false,
   compareSymbols: [],
+  show_popup_button: true,
   studies: [],
   width: "100%",
   height: 600,
