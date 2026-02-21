@@ -125,6 +125,29 @@ export const TOP_STORIES_WIDGET_CONFIG = {
   height: "600",
 };
 
+export const STOCK_MARKET_WIDGET_CONFIG = {
+  exchange: "US",
+  colorTheme: "dark",
+  dateRange: "12M",
+  showChart: true,
+  locale: "en",
+  largeChartUrl: "",
+  isTransparent: "false",
+  showSymbolLogo: "false",
+  showFloatingTooltip: "false",
+  plotLineColorGrowing: "#0FEDBE", // line color when price goes up
+  plotLineColorFalling: "#0FEDBE", // line color when price falls
+  gridLineColor: "rgba(240, 243, 250, 0)", // grid line color
+  scaleFontColor: "#DBDBDB", // font color for scale
+  belowLineFillColorGrowing: "rgba(41, 98, 255, 0.12)", // fill under line when growing
+  belowLineFillColorFalling: "rgba(41, 98, 255, 0.12)", // fill under line when falling
+  belowLineFillColorGrowingBottom: "rgba(41, 98, 255, 0)",
+  belowLineFillColorFallingBottom: "rgba(41, 98, 255, 0)",
+  symbolActiveColor: "rgba(15, 237, 190, 0.05)", // highlight color for active symbol
+  width: "100%",
+  height: "600",
+};
+
 export const MARKET_DATA_WIDGET_CONFIG = {
   title: "Stocks",
   width: "100%",
