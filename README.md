@@ -41,3 +41,35 @@ cd signalist
 
 # Install dependencies
 npm install
+```
+Environment Setup
+Create a .env file in the root directory with the following variables:
+```bash
+# Database
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/?appName=Cluster0
+
+# Authentication
+BETTER_AUTH_SECRET=your_random_secret_key_here
+BETTER_AUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# APIs
+NEXT_PUBLIC_FINNHUB_API_KEY=your_finnhub_api_key
+FINNHUB_API_KEY=your_finnhub_api_key
+GEMINI_API_KEY=your_gemini_api_key
+
+# Email Service
+NODEMAILER_EMAIL=your_gmail@gmail.com
+NODEMAILER_PASSWORD=your_app_specific_password
+
+# Application
+NODE_ENV=development
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+Run Development Server
+```bash
+npm run dev
+```
+
+
