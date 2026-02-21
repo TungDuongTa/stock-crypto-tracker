@@ -67,6 +67,10 @@ NODEMAILER_PASSWORD=your_app_specific_password
 NODE_ENV=development
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
+Run Inngests Development Server
+```bash
+npx inngest-cli@latest dev
+```
 Run Development Server
 ```bash
 npm run dev
