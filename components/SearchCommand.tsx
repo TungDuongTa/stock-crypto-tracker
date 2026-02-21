@@ -4,17 +4,15 @@ import {
   Command,
   CommandDialog,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { useDebounce } from "@/hooks/useDebounce";
 import { searchStocks } from "@/lib/actions/finhub.actions";
-import { Loader2, Search, Star, TrendingUp } from "lucide-react";
+import { Loader2, Search, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import WatchlistButton from "./WatchlistButton";
 
 export default function SearchCommand({
   renderAs = "button",
@@ -24,11 +22,13 @@ export default function SearchCommand({
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [stocks, setStocks] =
-    useState<StockWithWatchlistStatus[]>(initialStocks);
+
+  // Notice: stocks now just uses the base Stock type, no status needed here!
+  const [stocks, setStocks] = useState<Stock[]>(initialStocks || []);
 
   const isSearchMode = !!searchValue.trim();
   const displayStock = isSearchMode ? stocks : stocks?.slice(0, 10);
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -39,10 +39,8 @@ export default function SearchCommand({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
+
   const handleSearch = async () => {
-    if (!isSearchMode) {
-      return setStocks(initialStocks);
-    }
     setLoading(true);
     try {
       const results = await searchStocks(searchValue.trim());
@@ -54,21 +52,21 @@ export default function SearchCommand({
     }
   };
 
-  const debouncedSeach = useDebounce(handleSearch, 300);
+  const debouncedSearch = useDebounce(handleSearch, 300);
+
   useEffect(() => {
-    debouncedSeach();
+    debouncedSearch();
   }, [searchValue]);
+
   const handleSelectStock = () => {
     setOpen(false);
-    setSearchValue("");
-    setStocks(initialStocks);
+    setSearchValue(""); // Clear search on select
   };
+
   return (
     <>
       {renderAs === "icon" ? (
-        <Search className="cursor-pointer " onClick={() => setOpen(true)}>
-          {label}
-        </Search>
+        <Search className="cursor-pointer" onClick={() => setOpen(true)} />
       ) : (
         <Button
           onClick={() => setOpen(true)}
@@ -77,6 +75,7 @@ export default function SearchCommand({
           {label}
         </Button>
       )}
+
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
@@ -85,8 +84,8 @@ export default function SearchCommand({
         <Command>
           <div className="bg-gray-800! relative">
             <CommandInput
-              className=" text-gray-400 placeholder:text-gray-500 h-14 pr-10 "
-              placeholder="Type a command or search..."
+              className="text-gray-400 placeholder:text-gray-500 h-14 pr-10"
+              placeholder="Type a symbol or company name..."
               value={searchValue}
               onValueChange={setSearchValue}
             />
@@ -97,19 +96,19 @@ export default function SearchCommand({
 
           <CommandList className="bg-gray-800!">
             {loading ? (
-              <CommandEmpty>Loading stock...</CommandEmpty>
+              <CommandEmpty>Loading stocks...</CommandEmpty>
             ) : displayStock?.length === 0 ? (
               <div className="px-5 py-2">
-                {isSearchMode ? "No result found" : "No stock avaialble"}
+                {isSearchMode ? "No result found" : "No stocks available"}
               </div>
             ) : (
               <ul>
                 <div className="py-2 px-4 text-sm font-medium text-gray-400 bg-gray-700 border-b border-gray-700">
                   {isSearchMode ? "Search results" : "Popular stocks"}
-                  {` `}({displayStock?.length || 0} )
                 </div>
-                {displayStock?.map((stock, index) => (
+                {displayStock?.map((stock) => (
                   <li key={stock.symbol} className="search-item">
+                    {/* Link takes you to the page */}
                     <Link
                       href={`/stocks/${stock.symbol}`}
                       onClick={handleSelectStock}
@@ -119,10 +118,19 @@ export default function SearchCommand({
                       <div className="flex-1">
                         <div className="search-item-name">{stock.name}</div>
                         <div className="text-sm text-gray-500">
-                          {stock.symbol} | {stock.exchange} | {stock.type}
+                          {stock.symbol} | {stock.exchange}
                         </div>
                       </div>
-                      <Star />
+
+                      {/* Zustand Magic: We just pass the symbol. 
+                        The button will check the store and highlight 
+                        itself if the symbol is in the watchlist.
+                      */}
+                      <WatchlistButton
+                        symbol={stock.symbol}
+                        company={stock.name}
+                        type="icon"
+                      />
                     </Link>
                   </li>
                 ))}

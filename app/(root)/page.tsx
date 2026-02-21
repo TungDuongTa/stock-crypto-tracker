@@ -1,11 +1,15 @@
+import MarketNews from "@/components/MarketNews";
+import MarketNewsSkeleton from "@/components/MarketNewsSkeleton";
 import TradingViewWidget from "@/components/TradingViewWidget";
 import { Button } from "@/components/ui/button";
 import {
   HEATMAP_WIDGET_CONFIG,
   MARKET_DATA_WIDGET_CONFIG,
   MARKET_OVERVIEW_WIDGET_CONFIG,
+  STOCK_MARKET_WIDGET_CONFIG,
   TOP_STORIES_WIDGET_CONFIG,
 } from "@/lib/constants";
+import { Suspense } from "react";
 
 export default function Home() {
   const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
@@ -32,20 +36,34 @@ export default function Home() {
       </section>
 
       <section className="grid w-full gap-8 home-section">
-        <div className="h-full col-span-1 xl:col-span-1">
+        {/* <div className="h-full col-span-1 xl:col-span-1">
           <TradingViewWidget
             scriptUrl={`${scriptUrl}timeline.js`}
             config={TOP_STORIES_WIDGET_CONFIG}
             className="custom-chart"
             height={600}
           />
+        </div> */}
+        <div className="h-full col-span-1 xl:col-span-1">
+          <TradingViewWidget
+            title="Top stocks daily"
+            scriptUrl={`${scriptUrl}hotlists.js`}
+            config={STOCK_MARKET_WIDGET_CONFIG}
+            className="custom-chart"
+            height={600}
+          />
         </div>
-        <div className="h-full col-span-1 xl:col-span-2">
+        {/* <div className="h-full col-span-1 xl:col-span-2">
           <TradingViewWidget
             scriptUrl={`${scriptUrl}market-quotes.js`}
             config={MARKET_DATA_WIDGET_CONFIG}
             height={600}
           />
+        </div> */}
+        <div className="h-full col-span-1 xl:col-span-2">
+          <Suspense fallback={<MarketNewsSkeleton />}>
+            <MarketNews />
+          </Suspense>
         </div>
       </section>
     </div>

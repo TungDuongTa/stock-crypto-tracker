@@ -106,7 +106,7 @@ declare global {
   type WatchlistButtonProps = {
     symbol: string;
     company: string;
-    isInWatchlist: boolean;
+    isInWatchlist?: boolean;
     showTrashIcon?: boolean;
     type?: "button" | "icon";
     onWatchlistChange?: (symbol: string, isAdded: boolean) => void;
@@ -114,12 +114,28 @@ declare global {
 
   type QuoteData = {
     c?: number;
+    d?: number;
     dp?: number;
+    h?: number;
+    l?: number;
+    o?: number;
+    pc?: number;
+    t?: number;
   };
 
-  type ProfileData = {
-    name?: string;
-    marketCapitalization?: number;
+  type CompanyProfileData = {
+    country: string;
+    currency: string;
+    exchange: string;
+    ipo: string; // ISO date string (YYYY-MM-DD)
+    marketCapitalization: number;
+    name: string;
+    phone: string;
+    shareOutstanding: number;
+    ticker: string;
+    weburl: string;
+    logo: string;
+    finnhubIndustry: string;
   };
 
   type FinancialsData = {
