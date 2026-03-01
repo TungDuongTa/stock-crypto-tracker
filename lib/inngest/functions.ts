@@ -154,7 +154,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
 //Alerting function example
 export const checkPriceAlerts = inngest.createFunction(
   { id: "check-price-alerts" },
-  [{ cron: "*/1 * * * *" }], // Every 1 minutes
+  [{ cron: "*/5 * * * *" }], // Every 1 minutes
   async ({ step }) => {
     const alerts = await step.run(
       "fetch-all-alerts",

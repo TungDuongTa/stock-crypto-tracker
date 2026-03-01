@@ -71,11 +71,11 @@ export const sendPriceAlertEmail = async ({
   alertName: string;
   currentPrice: string;
   threshold: string;
-  alertType: "upper" | "lower";
+  alertType: "greater" | "less";
 }) => {
   // Select template based on alert type
   const template =
-    alertType === "upper"
+    alertType === "greater"
       ? STOCK_ALERT_UPPER_EMAIL_TEMPLATE
       : STOCK_ALERT_LOWER_EMAIL_TEMPLATE;
 
