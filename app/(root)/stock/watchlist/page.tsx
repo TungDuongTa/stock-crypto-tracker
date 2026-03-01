@@ -1,13 +1,13 @@
 import { Bell, Star } from "lucide-react";
 
-import SearchCommand from "@/components/SearchCommand";
+import SearchCommand from "@/components/stock/SearchCommand";
 import { getWatchlistWithData } from "@/lib/actions/watchlist.actions";
-import { WatchlistTable } from "@/components/WatchlistTable";
+import { WatchlistTable } from "@/components/stock/WatchlistTable";
 import { searchStocks } from "@/lib/actions/finhub.actions";
 import { getUserAlerts } from "@/lib/actions/alert.actions";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import AlertsList from "@/components/AlertsList";
+import AlertsList from "@/components/stock/AlertsList";
 
 const Watchlist = async () => {
   const watchlist = await getWatchlistWithData();
@@ -16,11 +16,13 @@ const Watchlist = async () => {
   // Empty state
   if (watchlist.length === 0) {
     return (
-      <section className="flex watchlist-empty-container">
-        <div className="watchlist-empty">
-          <Star className="watchlist-star" />
-          <h2 className="empty-title">Your watchlist is empty</h2>
-          <p className="empty-description">
+      <section className="flex container gap-8 flex-col items-center md:mt-10 p-6 text-center">
+        <div className="flex flex-col items-center justify-center text-center">
+          <Star className="h-16 w-16 text-gray-500 mb-4" />
+          <h2 className="text-xl font-semibold text-gray-400 mb-2">
+            Your watchlist is empty
+          </h2>
+          <p className="text-gray-500 mb-6 max-w-md">
             Start building your watchlist by searching for stocks and clicking
             the star icon to add them.
           </p>

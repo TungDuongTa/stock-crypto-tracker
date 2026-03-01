@@ -1,6 +1,6 @@
-import TradingViewWidget from "@/components/TradingViewWidget";
-import WatchlistButton from "@/components/WatchlistButton";
-import WatchlistSync from "@/components/WatchlistSync";
+import TradingViewWidget from "@/components/stock/TradingViewWidget";
+import WatchlistButton from "@/components/stock/WatchlistButton";
+import WatchlistSync from "@/components/stock/WatchlistSync";
 import { WatchlistItem } from "@/database/models/watchlist.model";
 import { getStockDetails } from "@/lib/actions/finhub.actions";
 import { getUserWatchlist } from "@/lib/actions/watchlist.actions";

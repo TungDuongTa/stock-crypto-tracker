@@ -110,7 +110,7 @@ export default function SearchCommand({
                   <li key={stock.symbol} className="search-item">
                     {/* Link takes you to the page */}
                     <Link
-                      href={`/stocks/${stock.symbol}`}
+                      href={`/stock/stocks/${stock.symbol}`}
                       onClick={handleSelectStock}
                       className="search-item-link"
                     >

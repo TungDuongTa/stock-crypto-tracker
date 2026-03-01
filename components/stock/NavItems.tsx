@@ -13,7 +13,7 @@ export default function NavItems({
 }) {
   const pathname = usePathname();
   const isActive = (path: string) => {
-    if (path === "/") return pathname === "/";
+    if (path === "/stock") return pathname === "/stock";
     return pathname.startsWith(path);
   };
   return (
