@@ -153,10 +153,11 @@ declare global {
   };
 
   type StockWithData = {
-    userId: string;
+    userId?: string;
     symbol: string;
+    logo?: string;
     company: string;
-    addedAt: Date;
+    addedAt?: Date;
     currentPrice?: number;
     changePercent?: number;
     priceFormatted?: string;
@@ -198,8 +199,9 @@ declare global {
     symbol: string;
     company: string;
     alertName: string;
-    alertType: "upper" | "lower";
+    alertType: "greater" | "less";
     threshold: string;
+    logo?: string;
   };
 
   type AlertModalProps = {
@@ -223,14 +225,15 @@ declare global {
   };
 
   type Alert = {
-    id: string;
+    userId: string;
     symbol: string;
     company: string;
     alertName: string;
-    currentPrice: number;
-    alertType: "upper" | "lower";
+    currentPrice?: number;
+    alertType: "greater" | "less";
     threshold: number;
     changePercent?: number;
+    logo?: string;
   };
 }
 

@@ -307,8 +307,12 @@ export const getStockDetails = cache(async (symbol: string) => {
     const peersUrl =
       `${FINNHUB_BASE_URL}/stock/peers` +
       `?symbol=${cleanSymbol}&token=${token}`;
+    // financial metrics
+    const financialsUrl =
+      `${FINNHUB_BASE_URL}/stock/metric` +
+      `?symbol=${cleanSymbol}&metric=all&token=${token}`;
     // 4. Fetch data in parallel
-    const [quoteRes, profileRes, peersRes] = await Promise.all([
+    const [quoteRes, profileRes, peersRes, financialsRes] = await Promise.all([
       // Price data → always fresh
       fetch(quoteUrl, { cache: "no-store" }),
 
@@ -323,17 +327,24 @@ export const getStockDetails = cache(async (symbol: string) => {
         cache: "force-cache",
         next: { revalidate: 1800 },
       }),
+      // Financial metrics → update frequently
+      fetch(financialsUrl, {
+        cache: "force-cache",
+        next: { revalidate: 60 },
+      }),
     ]);
 
     // 5. Check responses
     if (!quoteRes.ok) throw new Error("Quote fetch failed");
     if (!profileRes.ok) throw new Error("Profile fetch failed");
     if (!peersRes.ok) throw new Error("Financials fetch failed");
+    if (!financialsRes.ok) throw new Error("Financials fetch failed");
 
     // 6. Parse JSON
     const quoteData = (await quoteRes.json()) as QuoteData;
     const profileData = (await profileRes.json()) as CompanyProfileData;
     const peersData = await peersRes.json();
+    const financialsData = (await financialsRes.json()) as FinancialsData;
 
     // 7. Validate important fields
     if (!quoteData?.c || !profileData?.name) {
@@ -342,17 +353,18 @@ export const getStockDetails = cache(async (symbol: string) => {
 
     // 8. Prepare derived values
     const changePercent = quoteData.dp || 0;
-    // const peRatio = financialsData?.metric?.peNormalizedAnnual ?? null;
+    const peRatio = financialsData?.metric?.peBasicExclExtraTTM ?? null;
 
     // 9. Return formatted result for UI
     return {
       symbol: cleanSymbol,
+      logo: profileData.logo,
       company: profileData.name,
       currentPrice: quoteData.c,
       changePercent,
       priceFormatted: formatPrice(quoteData.c),
       changeFormatted: formatChangePercent(changePercent),
-      // peRatio: peRatio ? peRatio.toFixed(1) : "—",
+      peRatio: peRatio ? peRatio.toFixed(1) : "—",
       marketCapFormatted: formatMarketCapValue(
         profileData.marketCapitalization || 0,
       ),
@@ -362,3 +374,30 @@ export const getStockDetails = cache(async (symbol: string) => {
     throw new Error("Failed to fetch stock details");
   }
 });
+
+export async function getCompanyLogo(symbol: string): Promise<string | null> {
+  try {
+    const token = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
+    if (!token) {
+      return null;
+    }
+
+    const cleanSymbol = symbol.trim().toUpperCase();
+    const url =
+      `${FINNHUB_BASE_URL}/stock/profile2` +
+      `?symbol=${cleanSymbol}&token=${token}`;
+
+    const res = await fetch(url, {
+      cache: "force-cache",
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) return null;
+
+    const data = (await res.json()) as { logo?: string };
+    return data.logo || null;
+  } catch (error) {
+    console.error(`Error fetching logo for ${symbol}:`, error);
+    return null;
+  }
+}
