@@ -37,7 +37,7 @@ A modern web application to track real-time stock and cryptocurrency prices, bui
 ```bash
 # Clone repo
 git clone https://github.com/TungDuongTa/stock-crypto-tracker.git
-cd signalist
+cd stock-crypto-app
 
 # Install dependencies
 npm install
