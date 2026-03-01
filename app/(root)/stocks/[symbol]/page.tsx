@@ -21,7 +21,7 @@ export default async function StockDetails({ params }: StockDetailsPageProps) {
   const watchlist = await getUserWatchlist();
 
   // Extract symbols for the store
-  const allSymbols = watchlist.map((item: any) => item.symbol);
+  const allSymbols = watchlist.map((item: WatchlistItem) => item.symbol);
 
   if (!stockData) notFound();
 

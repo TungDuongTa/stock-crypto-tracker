@@ -7,8 +7,9 @@ import { success } from "better-auth";
 import { sendNewsSummaryEmail, sendWelcomeEmail } from "../nodemailer";
 import { getAllUsersForNewsEmail } from "../actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "../actions/watchlist.actions";
-import { getNews } from "../actions/finhub.actions";
-import { getFormattedTodayDate } from "../utils";
+import { getNews, getStockDetails } from "../actions/finhub.actions";
+import { formatPrice, getFormattedTodayDate } from "../utils";
+import { getAllAlertsForPriceCheck } from "../actions/alert.actions";
 
 export const sendSignUpEmail = inngest.createFunction(
   { id: "sign-up-email" },
@@ -146,6 +147,100 @@ export const sendDailyNewsSummary = inngest.createFunction(
     return {
       success: true,
       message: "Daily news summary emails sent successfully",
+    };
+  },
+);
+
+//Alerting function example
+export const checkPriceAlerts = inngest.createFunction(
+  { id: "check-price-alerts" },
+  [{ cron: "*/5 * * * *" }], // Every 1 minutes
+  async ({ step }) => {
+    const alerts = await step.run(
+      "fetch-all-alerts",
+      getAllAlertsForPriceCheck,
+    );
+
+    if (!alerts || alerts.length === 0) {
+      return { success: false, message: "No active alerts found" };
+    }
+
+    // Group alerts by symbol for batch processing
+    const alertsBySymbol = alerts.reduce(
+      (acc: Record<string, any[]>, alert: any) => {
+        if (!acc[alert.symbol]) acc[alert.symbol] = [];
+        acc[alert.symbol].push(alert);
+        return acc;
+      },
+      {},
+    );
+
+    const triggeredAlerts = await step.run("check-prices", async () => {
+      const alerts: any[] = [];
+      for (const symbol of Object.keys(alertsBySymbol)) {
+        try {
+          const stockData = await getStockDetails(symbol);
+          const currentPrice = stockData.currentPrice;
+
+          // Check which alerts are triggered
+          alertsBySymbol[symbol].forEach((alert: any) => {
+            const isTriggered =
+              (alert.alertType === "greater" &&
+                currentPrice >= alert.threshold) ||
+              (alert.alertType === "less" && currentPrice <= alert.threshold);
+
+            if (isTriggered) {
+              alerts.push({
+                ...alert,
+                currentPrice,
+              });
+            }
+          });
+        } catch (error) {
+          console.error(`Error checking price for ${symbol}:`, error);
+        }
+      }
+      return alerts;
+    });
+
+    // Send emails for triggered alerts
+    if (triggeredAlerts.length > 0) {
+      await step.run("send-price-alerts", async () => {
+        const { sendPriceAlertEmail } = await import("../nodemailer");
+        const { getAllUsersForNewsEmail } =
+          await import("../actions/user.actions");
+
+        // Get user emails mapping
+        const users = await getAllUsersForNewsEmail();
+        const userMap = new Map(users.map((u) => [u.id, u.email]));
+
+        for (const alert of triggeredAlerts) {
+          try {
+            const userEmail = userMap.get(alert.userId);
+            if (!userEmail) continue;
+
+            await sendPriceAlertEmail({
+              email: userEmail,
+              company: alert.company,
+              symbol: alert.symbol,
+              alertName: alert.alertName,
+              currentPrice: formatPrice(alert.currentPrice),
+              threshold: formatPrice(alert.threshold),
+              alertType: alert.alertType,
+            });
+          } catch (error) {
+            console.error(
+              `Failed to send alert email for ${alert.symbol}:`,
+              error,
+            );
+          }
+        }
+      });
+    }
+
+    return {
+      success: true,
+      message: `Checked ${Object.keys(alertsBySymbol).length} symbols, triggered ${triggeredAlerts.length} alerts`,
     };
   },
 );
