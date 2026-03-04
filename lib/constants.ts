@@ -3,6 +3,12 @@ export const NAV_ITEMS = [
   { href: "/stock/watchlist", label: "Watchlist" },
   { href: "/search", label: "Search" },
 ];
+export const CRYPTO_NAV_ITEMS = [
+  { href: "/crypto", label: "Dashboard" },
+  { href: "/crypto/watchlist", label: "Watchlist" },
+  { href: "/crypto/coins", label: "All Coins" },
+  { href: "/search", label: "Search" },
+];
 
 // Sign-up form select options
 export const INVESTMENT_GOALS = [

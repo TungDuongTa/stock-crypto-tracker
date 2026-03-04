@@ -48,7 +48,7 @@ const Watchlist = async () => {
           <h2 className="text-xl md:text-2xl font-bold text-gray-100">
             Alerts
           </h2>
-          <SearchCommand initialStocks={initialStocks} />
+          {/* <SearchCommand initialStocks={initialStocks} /> */}
         </div>
 
         <div className="relative! w-full! max-h-screen overflow-auto bg-gray-800 border border-gray-600! rounded-lg! p-4 dark-scroll ">

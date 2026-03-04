@@ -62,7 +62,7 @@ const WatchlistButton = ({
   if (type === "icon") {
     return (
       <button
-        className={`watchlist-icon-btn ${isAdded ? "watchlist-icon-added" : ""}`}
+        className={`w-fit cursor-pointer hover:bg-transparent! text-gray-400 hover:text-yellow-500 ${isAdded ? "text-yellow-500! hover:text-yellow-600!" : ""}`}
         onClick={handleClick}
       >
         <Star fill={isAdded ? "currentColor" : "none"} />
@@ -72,7 +72,7 @@ const WatchlistButton = ({
 
   return (
     <button
-      className={`watchlist-btn ${isAdded ? "watchlist-remove" : ""}`}
+      className={`bg-yellow-500 text-base hover:bg-yellow-500 text-gray-900 w-full rounded h-11 font-semibold cursor-pointer ${isAdded ? "bg-red-500! hover:bg-red-500! text-gray-900!" : ""}`}
       onClick={handleClick}
     >
       {showTrashIcon && isAdded ? <Trash2 /> : null}
