@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { WATCHLIST_TABLE_HEADER } from "@/lib/constants";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 import { useRouter } from "next/navigation";
 import { cn, getChangeColorClass } from "@/lib/utils";
@@ -51,11 +51,11 @@ export function WatchlistTable({ watchlist }: WatchlistTableProps) {
           }
         />
       )}
-      <Table className="scrollbar-hide-default relative! overflow-hidden w-full! bg-gray-800 border border-gray-600! rounded-lg!">
+      <Table className="scrollbar-hide relative! overflow-hidden w-full! bg-gray-800 border border-gray-600! rounded-lg!">
         <TableHeader>
-          <TableRow className="table-header-row">
+          <TableRow className="text-gray-400 font-medium bg-gray-700 border-b border-gray-600 hover:bg-gray-700">
             {WATCHLIST_TABLE_HEADER.map((label) => (
-              <TableHead className="table-header" key={label}>
+              <TableHead className="pl-4" key={label}>
                 {label}
               </TableHead>
             ))}
@@ -65,34 +65,38 @@ export function WatchlistTable({ watchlist }: WatchlistTableProps) {
           {watchlist.map((item, index) => (
             <TableRow
               key={item.symbol + index}
-              className="table-row"
+              className="border-b cursor-pointer text-gray-100 border-gray-600 hover:bg-gray-700/50 transition-colors"
               // onClick={() =>
               //   router.push(`/stocks/${encodeURIComponent(item.symbol)}`)
               // }
             >
-              <TableCell className="pl-4 table-cell">{item.company}</TableCell>
-              <TableCell className="table-cell">{item.symbol}</TableCell>
-              <TableCell className="table-cell">
+              <TableCell className="pl-4 font-medium text-base">
+                {item.company}
+              </TableCell>
+              <TableCell className="font-medium text-base">
+                {item.symbol}
+              </TableCell>
+              <TableCell className="font-medium text-base">
                 {item.priceFormatted || "—"}
               </TableCell>
               <TableCell
                 className={cn(
-                  "table-cell",
+                  "font-medium text-base",
                   getChangeColorClass(item.changePercent),
                 )}
               >
                 {item.changeFormatted || "—"}
               </TableCell>
-              <TableCell className="table-cell">
+              <TableCell className="font-medium text-base">
                 {item.marketCap || "—"}
               </TableCell>
-              <TableCell className="table-cell">
+              <TableCell className="font-medium text-base">
                 {item.peRatio || "—"}
               </TableCell>
               <TableCell>
                 <Button
                   onClick={() => handleAddAlert(item)}
-                  className="add-alert z-100"
+                  className="flex text-sm items-center whitespace-nowrap gap-1.5 px-3 w-fit py-2 text-yellow-600 border border-yellow-600/20 rounded font-medium bg-transparent hover:bg-transparent cursor-pointer transition-colors z-100"
                 >
                   Add Alert
                 </Button>

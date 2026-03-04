@@ -1,6 +1,12 @@
 export const NAV_ITEMS = [
-  { href: "/", label: "Dashboard" },
-  { href: "/watchlist", label: "Watchlist" },
+  { href: "/stock", label: "Dashboard" },
+  { href: "/stock/watchlist", label: "Watchlist" },
+  { href: "/search", label: "Search" },
+];
+export const CRYPTO_NAV_ITEMS = [
+  { href: "/crypto", label: "Dashboard" },
+  { href: "/crypto/watchlist", label: "Watchlist" },
+  { href: "/crypto/coins", label: "All Coins" },
   { href: "/search", label: "Search" },
 ];
 

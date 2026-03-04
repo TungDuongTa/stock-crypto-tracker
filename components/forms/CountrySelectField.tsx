@@ -58,11 +58,18 @@ const CountrySelect = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="country-select-trigger"
+          className="h-12 px-3 py-3 text-base w-full justify-between font-normal border-gray-600 bg-gray-800 text-gray-400 rounded-lg focus:!border-yellow-500 focus:ring-0"
         >
           {value ? (
             <span className="flex items-center gap-2">
-              <span className="emoji-flag">{getFlagEmoji(value)}</span>
+              <span
+                style={{
+                  fontFamily: "'Twemoji Country Flags'",
+                  fontVariantEmoji: "emoji",
+                }}
+              >
+                {getFlagEmoji(value)}
+              </span>
               <span>{countries.find((c) => c.value === value)?.label}</span>
             </span>
           ) : (
@@ -102,7 +109,12 @@ const CountrySelect = ({
                     )}
                   />
                   <span className="flex items-center gap-2">
-                    <span className="emoji-flag">
+                    <span
+                      style={{
+                        fontFamily: "'Twemoji Country Flags'",
+                        fontVariantEmoji: "emoji",
+                      }}
+                    >
                       {getFlagEmoji(country.value)}
                     </span>
                     <span>{country.label}</span>
@@ -126,7 +138,7 @@ export const CountrySelectField = ({
 }: CountrySelectProps) => {
   return (
     <div className="space-y-2">
-      <Label htmlFor={name} className="form-label">
+      <Label htmlFor={name} className="text-sm font-medium text-gray-400">
         {label}
       </Label>
       <Controller

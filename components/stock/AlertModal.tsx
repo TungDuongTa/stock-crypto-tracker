@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import InputField from "./forms/InputField";
-import SelectField from "./forms/SelectField";
-import { Button } from "./ui/button";
+import InputField from "../forms/InputField";
+import SelectField from "../forms/SelectField";
+import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { createAlert, updateAlert } from "@/lib/actions/alert.actions";
 import { ALERT_TYPE_OPTIONS, CONDITION_OPTIONS } from "@/lib/constants";

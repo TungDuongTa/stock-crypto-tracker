@@ -1,6 +1,6 @@
-import MarketNews from "@/components/MarketNews";
-import MarketNewsSkeleton from "@/components/MarketNewsSkeleton";
-import TradingViewWidget from "@/components/TradingViewWidget";
+import MarketNews from "@/components/stock/MarketNews";
+import MarketNewsSkeleton from "@/components/stock/MarketNewsSkeleton";
+import TradingViewWidget from "@/components/stock/TradingViewWidget";
 import { Button } from "@/components/ui/button";
 import {
   HEATMAP_WIDGET_CONFIG,
@@ -14,8 +14,8 @@ import { Suspense } from "react";
 export default function Home() {
   const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
   return (
-    <div className="flex min-h-screen home-wrapper">
-      <section className="grid w-full gap-8 home-section">
+    <div className="flex min-h-screen text-gray-400 flex-col gap-4 md:gap-10 items-center sm:items-start">
+      <section className="grid w-full gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <div className="md:col-span-1 xl:col-span-1 ">
           <TradingViewWidget
             title="Market Overview"
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid w-full gap-8 home-section">
+      <section className="grid w-full gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {/* <div className="h-full col-span-1 xl:col-span-1">
           <TradingViewWidget
             scriptUrl={`${scriptUrl}timeline.js`}

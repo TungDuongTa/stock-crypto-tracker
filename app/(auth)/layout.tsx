@@ -18,9 +18,9 @@ export default async function Layout({
     redirect("/");
   }
   return (
-    <main className="auth-layout">
-      <section className="auth-left-section scrollbar-hide-default">
-        <Link href="/" className="auth-logo">
+    <main className="flex flex-col justify-between lg:flex-row h-screen bg-gray-900 relative overflow-hidden">
+      <section className="w-full lg:w-[45%] lg:h-screen px-6 lg:px-16 flex flex-col overflow-y-auto scrollbar-hide-default">
+        <Link href="/" className="pt-6 lg:pt-8 mb-8 lg:mb-12">
           <Image
             src="/assets/icons/logo.svg"
             alt="Signalist logo"
@@ -33,7 +33,7 @@ export default async function Layout({
       </section>
       <section className="w-full max-lg:border-t max-lg:border-gray-600 lg:w-[55%] lg:h-screen bg-gray-800 px-6 py-4 md:p-6 lg:py-12 lg:px-18 flex flex-col justify-start relative">
         <div className="z-10 relative lg:mt-4 lg:mb-16">
-          <blockquote className="auth-blockquote">
+          <blockquote className="text-sm md:text-xl lg:text-2xl font-medium text-gray-400 mb-1 md:mb-6 lg:mb-8">
             Signalist turned my watchlist into a winning list. The alerts are
             spot-on, and I feel more confident making moves in the market
           </blockquote>

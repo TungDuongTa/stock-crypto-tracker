@@ -19,7 +19,7 @@ export default function SelectField({
 }: SelectFieldProps) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={name} className="form-label">
+      <Label htmlFor={name} className="text-sm font-medium text-gray-400">
         {label}
       </Label>
       <Controller
@@ -30,7 +30,7 @@ export default function SelectField({
         // }}
         render={({ field }) => (
           <Select value={field.value} onValueChange={field.onChange}>
-            <SelectTrigger className="select-trigger">
+            <SelectTrigger className="w-full !h-12 px-3 py-3 text-base border-gray-600 bg-gray-800 text-white rounded-lg focus:!border-yellow-500 focus:ring-0">
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent className="bg-gray-800 border-gray-600 text-white">

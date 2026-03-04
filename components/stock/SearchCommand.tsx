@@ -82,7 +82,7 @@ export default function SearchCommand({
         className="bg-gray-800! lg:min-w-200 border-gray-600 fixed top-10 left-1/2 -translate-x-1/2 translate-y-5"
       >
         <Command>
-          <div className="bg-gray-800! relative">
+          <div className="bg-gray-800! border-b border-gray-600 relative">
             <CommandInput
               className="text-gray-400 placeholder:text-gray-500 h-14 pr-10"
               placeholder="Type a symbol or company name..."
@@ -94,7 +94,7 @@ export default function SearchCommand({
             )}
           </div>
 
-          <CommandList className="bg-gray-800!">
+          <CommandList className="bg-gray-800! max-h-100">
             {loading ? (
               <CommandEmpty>Loading stocks...</CommandEmpty>
             ) : displayStock?.length === 0 ? (
@@ -107,25 +107,26 @@ export default function SearchCommand({
                   {isSearchMode ? "Search results" : "Popular stocks"}
                 </div>
                 {displayStock?.map((stock) => (
-                  <li key={stock.symbol} className="search-item">
+                  <li
+                    key={stock.symbol}
+                    className="rounded-none my-3 px-1 w-full data-[selected=true]:bg-gray-600"
+                  >
                     {/* Link takes you to the page */}
                     <Link
-                      href={`/stocks/${stock.symbol}`}
+                      href={`/stock/stocks/${stock.symbol}`}
                       onClick={handleSelectStock}
-                      className="search-item-link"
+                      className="px-2 w-full cursor-pointer border-b border-gray-600 last:border-b-0 transition-colors flex items-center gap-3"
                     >
                       <TrendingUp className="h-4 w-4 text-gray-500" />
                       <div className="flex-1">
-                        <div className="search-item-name">{stock.name}</div>
+                        <div className=" font-medium text-base text-gray-400">
+                          {stock.name}
+                        </div>
                         <div className="text-sm text-gray-500">
                           {stock.symbol} | {stock.exchange}
                         </div>
                       </div>
 
-                      {/* Zustand Magic: We just pass the symbol. 
-                        The button will check the store and highlight 
-                        itself if the symbol is in the watchlist.
-                      */}
                       <WatchlistButton
                         symbol={stock.symbol}
                         company={stock.name}

@@ -48,7 +48,7 @@ export default function SignIn() {
 
   return (
     <>
-      <h1 className="form-title">Welcome back</h1>
+      <h1 className="text-4xl font-bold text-gray-400 mb-10">Welcome back</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="email"
@@ -85,7 +85,7 @@ export default function SignIn() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="yellow-btn w-full mt-5"
+          className="h-12 cursor-pointer bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-gray-950 font-medium text-base rounded-lg shadow-lg disabled:opacity-50 w-full mt-5"
         >
           {isSubmitting ? "Loging In ..." : "Log In"}
         </Button>
