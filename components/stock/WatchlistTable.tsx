@@ -51,9 +51,9 @@ export function WatchlistTable({ watchlist }: WatchlistTableProps) {
           }
         />
       )}
-      <Table className="scrollbar-hide relative! overflow-hidden w-full! bg-gray-800 border border-gray-600! rounded-lg!">
+      <Table className="scrollbar-hide relative! overflow-hidden w-full! bg-gray-800 border border-gray-600! rounded-lg! ">
         <TableHeader>
-          <TableRow className="text-gray-400 font-medium bg-gray-700 border-b border-gray-600 hover:bg-gray-700">
+          <TableRow className="text-gray-400 font-medium bg-gray-700 border-b border-gray-600 hover:bg-gray-700 ">
             {WATCHLIST_TABLE_HEADER.map((label) => (
               <TableHead className="pl-4" key={label}>
                 {label}
