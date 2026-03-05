@@ -1,3 +1,5 @@
+import { he } from "zod/v4/locales";
+
 export const NAV_ITEMS = [
   { href: "/stock", label: "Dashboard" },
   { href: "/stock/watchlist", label: "Watchlist" },
@@ -100,7 +102,16 @@ export const MARKET_OVERVIEW_WIDGET_CONFIG = {
   showSymbolLogo: true, // show logo next to symbols
   showChart: true, // display mini chart
 };
-
+export const SCREENER_CRYPTO_WIDGET_CONFIG = {
+  defaultColumn: "overview",
+  screenerType: "crypto_mkt",
+  displayCurrency: "USD",
+  colorTheme: "dark",
+  isTransparent: true,
+  locale: "en",
+  width: "100%",
+  height: 600,
+};
 export const HEATMAP_WIDGET_CONFIG = {
   dataSource: "SPX500",
   blockSize: "market_cap_basic",

@@ -33,15 +33,17 @@ const Watchlist = async () => {
   }
 
   return (
-    <section className="grid grid-cols-3 ">
-      <div className="flex flex-col gap-6 col-span-2 mx-2">
+    <section className="grid grid-cols-1 md:grid-cols-3 ">
+      <div className="flex flex-col gap-6 col-span-1 md:col-span-2 mx-2">
         <div className="flex items-center justify-between">
           <h2 className="text-xl md:text-2xl font-bold text-gray-100">
             Watchlist
           </h2>
           <SearchCommand initialStocks={initialStocks} />
         </div>
-        <WatchlistTable watchlist={watchlist} />
+        <div className="dark-scroll">
+          <WatchlistTable watchlist={watchlist} />
+        </div>
       </div>
       <div className="col-span-1 mx-2 flex gap-6 flex-col ">
         <div className="flex items-center justify-between">
