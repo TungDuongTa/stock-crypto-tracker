@@ -1,21 +1,12 @@
-import { DataTable } from "@/components/crypto/DataTable";
-import Categories from "@/components/crypto/home/Categories";
-import CoinOverview from "@/components/crypto/home/CoinOverview";
-import {
-  CoinOverviewFallback,
-  TrendingCoinsFallback,
-} from "@/components/crypto/home/fallback";
+import { TrendingCoinsFallback } from "@/components/crypto/home/fallback";
 import TrendingCoins from "@/components/crypto/home/TrendingCoins";
 import TradingViewWidget from "@/components/stock/TradingViewWidget";
-import { fetcher } from "@/lib/actions/coingecko.actions";
+
 import {
   HEATMAP_WIDGET_CONFIG,
   SCREENER_CRYPTO_WIDGET_CONFIG,
 } from "@/lib/constants";
-import { cn, formatCurrency } from "@/lib/utils";
-import { TrendingDown, TrendingUp } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+
 import React, { Suspense } from "react";
 
 export default async function Page() {
