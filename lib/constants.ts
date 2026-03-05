@@ -104,7 +104,7 @@ export const MARKET_OVERVIEW_WIDGET_CONFIG = {
 };
 export const SCREENER_CRYPTO_WIDGET_CONFIG = {
   defaultColumn: "overview",
-  screenerType: "crypto_mkt",
+  screener_type: "crypto_mkt",
   displayCurrency: "USD",
   colorTheme: "dark",
   isTransparent: true,
