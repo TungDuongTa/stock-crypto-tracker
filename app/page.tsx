@@ -33,7 +33,7 @@ function HomePage() {
           <p className="font-bold">Crypto</p>
         </Link>
         <Link
-          href="/crypto"
+          href="/stock"
           className=" group rounded-2xl relative flex flex-col items-center justify-center gap-5 text-2xl hover:text-yellow-500 "
         >
           <div className="rounded-2xl overflow-hidden aspect-square w-full relative group-hover:scale-105 origin-bottom transition-transform  group-hover:brightness-125 group-hover:outline-2 group-hover:outline-yellow-500 group-hover:outline-offset-4 brightness-90 ">
