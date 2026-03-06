@@ -20,7 +20,7 @@ export default async function TrendingCoins() {
         const item = coin.item;
         return (
           <Link
-            href={`/crypto/coins/${item.id}`}
+            href={`/crypto/coins/${item.symbol}`}
             className="flex gap-2 items-center "
           >
             <div className="flex items-center">

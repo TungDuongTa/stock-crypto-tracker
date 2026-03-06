@@ -60,6 +60,11 @@ declare global {
     label?: string;
     initialStocks: StockWithWatchlistStatus[];
   };
+  type SearchCoinsCommandProps = {
+    renderAs?: "button" | "icon";
+    label?: string;
+    initialCoins: CoinsWithWatchlistStatus[];
+  };
 
   type WelcomeEmailData = {
     email: string;
@@ -82,6 +87,9 @@ declare global {
   };
 
   type StockWithWatchlistStatus = Stock & {
+    isInWatchlist: boolean;
+  };
+  type CoinsWithWatchlistStatus = SearchCoin & {
     isInWatchlist: boolean;
   };
 
