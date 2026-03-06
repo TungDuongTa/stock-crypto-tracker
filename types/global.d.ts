@@ -63,7 +63,7 @@ declare global {
   type SearchCoinsCommandProps = {
     renderAs?: "button" | "icon";
     label?: string;
-    initialCoins: CoinsWithWatchlistStatus[];
+    initialCoins: SearchCoin[];
   };
 
   type WelcomeEmailData = {

@@ -13,6 +13,7 @@ import { searchStocks } from "@/lib/actions/finhub.actions";
 import { Loader2, Search, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import CryptoWatchlistButton from "./CryptoWatchlistButton";
 
 export default function SearchCommand({
   renderAs = "button",
@@ -123,15 +124,17 @@ export default function SearchCommand({
                           {coin.name}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {coin.symbol} |
+                          {coin.symbol.toUpperCase()}
                         </div>
                       </div>
 
-                      {/* <WatchlistButton
-                        symbol={stock.symbol}
-                        company={stock.name}
+                      <CryptoWatchlistButton
+                        coinId={coin.id}
+                        symbol={coin.symbol}
+                        name={coin.name}
+                        image={coin.large || coin.thumb}
                         type="icon"
-                      /> */}
+                      />
                     </Link>
                   </li>
                 ))}
