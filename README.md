@@ -60,7 +60,10 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 NEXT_PUBLIC_FINNHUB_API_KEY=your_finnhub_api_key
 FINNHUB_API_KEY=your_finnhub_api_key
 GEMINI_API_KEY=your_gemini_api_key
-
+COINGECKO_BASE_URL=
+COINGECKO_API_KEY=
+NEXT_PUBLIC_COINGECKO_WEBSOCKET_URL=optional
+NEXT_PUBLIC_COINGECKO_API_KEY=
 # Email Service
 NODEMAILER_EMAIL=your_gmail@gmail.com
 NODEMAILER_PASSWORD=your_app_specific_password
