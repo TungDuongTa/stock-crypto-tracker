@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import SearchCommand from "../stock/SearchCommand";
+import SearchModal from "./SearchModal";
 
 export default function NavItems({
   initialStocks,
@@ -22,11 +23,7 @@ export default function NavItems({
         if (href === "/search")
           return (
             <li key="search-trigger">
-              <SearchCommand
-                renderAs="icon"
-                label="Search stock"
-                initialStocks={initialStocks}
-              />
+              <SearchModal initialCoins={[]} renderAs="icon" />
             </li>
           );
 
