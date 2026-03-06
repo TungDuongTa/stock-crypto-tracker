@@ -6,6 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 
 A modern web application to track real-time stock and cryptocurrency prices, build personalized watchlists, receive price alerts, and stay informed with AI-powered market news summaries.
+
 **[🚀 View Live Demo](https://stock-crypto-tracker.vercel.app/)**
 
 ## 🌟 Features
