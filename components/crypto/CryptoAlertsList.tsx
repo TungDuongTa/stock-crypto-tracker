@@ -1,3 +1,4 @@
+// components/crypto/CryptoAlertsList.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -6,8 +7,13 @@ import CryptoAlertModal from "./CryptoAlertModal";
 import { CryptoAlertCard } from "./CryptoAlertCard";
 import { deleteCryptoAlert } from "@/lib/actions/crypto-alert.actions";
 
+type CryptoAlertListItem = CryptoAlert & {
+  _id: string;
+  priceChange24h?: number;
+};
+
 type CryptoAlertsListProps = {
-  alertData: any[] | undefined;
+  alertData: CryptoAlertListItem[] | undefined;
   onAlertDeleted?: () => void;
 };
 
@@ -34,7 +40,7 @@ export default function CryptoAlertsList({
     }
   };
 
-  const handleEditAlert = (alert: any) => {
+  const handleEditAlert = (alert: CryptoAlertListItem) => {
     setEditingAlert({
       id: alert._id,
       data: {
@@ -74,9 +80,9 @@ export default function CryptoAlertsList({
       />
 
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
-        {alertData.map((alert, index) => (
+        {alertData.map((alert) => (
           <CryptoAlertCard
-            key={index}
+            key={alert._id}
             alert={alert}
             onEdit={handleEditAlert}
             onDelete={handleDeleteAlert}
@@ -86,4 +92,3 @@ export default function CryptoAlertsList({
     </>
   );
 }
-
