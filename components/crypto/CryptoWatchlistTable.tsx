@@ -14,6 +14,9 @@ import {
 import { cn, formatChangePercent, formatCurrency } from "@/lib/utils";
 import type { CryptoWatchlistWithData } from "@/lib/actions/crypto-watchlist.actions";
 import CryptoWatchlistButton from "./CryptoWatchlistButton";
+import { Button } from "../ui/button";
+import CryptoAlertModal from "./CryptoAlertModal";
+import { useState } from "react";
 
 export default function CryptoWatchlistTable({
   watchlist,
@@ -21,9 +24,47 @@ export default function CryptoWatchlistTable({
   watchlist: CryptoWatchlistWithData[];
 }) {
   const router = useRouter();
+  const [alertModal, setAlertModal] = useState<{
+    open: boolean;
+    coin: CryptoWatchlistWithData | null;
+  }>({
+    open: false,
+    coin: null,
+  });
+
+  const handleAddAlert = (coin: CryptoWatchlistWithData) => {
+    setAlertModal({ open: true, coin });
+  };
 
   return (
-    <Table className="dark-scroll relative overflow-hidden w-full bg-gray-800 border border-gray-600 rounded-lg">
+    <>
+      {alertModal.coin && (
+        <CryptoAlertModal
+          alertData={{
+            coinId: alertModal.coin.coinId,
+            symbol: alertModal.coin.symbol,
+            name: alertModal.coin.name,
+            alertName: "",
+            alertType: "greater",
+            threshold:
+              alertModal.coin.currentPrice !== undefined
+                ? String(alertModal.coin.currentPrice)
+                : "",
+            image: alertModal.coin.image,
+          }}
+          action="create"
+          open={alertModal.open}
+          setOpen={(open) =>
+            setAlertModal({
+              ...alertModal,
+              open,
+              coin: open ? alertModal.coin : null,
+            })
+          }
+        />
+      )}
+
+      <Table className="dark-scroll relative overflow-hidden w-full bg-gray-800 border border-gray-600 rounded-lg">
       <TableHeader>
         <TableRow className="text-gray-400 font-medium bg-gray-700 border-b border-gray-600 hover:bg-gray-700">
           <TableHead className="pl-4">Coin</TableHead>
@@ -32,6 +73,7 @@ export default function CryptoWatchlistTable({
           <TableHead>24h Change</TableHead>
           <TableHead>Market Cap</TableHead>
           <TableHead>24h Volume</TableHead>
+          <TableHead>Alert</TableHead>
           <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
@@ -100,6 +142,15 @@ export default function CryptoWatchlistTable({
               </TableCell>
 
               <TableCell onClick={(e) => e.stopPropagation()}>
+                <Button
+                  onClick={() => handleAddAlert(item)}
+                  className="flex text-sm items-center whitespace-nowrap gap-1.5 px-3 w-fit py-2 text-yellow-600 border border-yellow-600/20 rounded font-medium bg-transparent hover:bg-transparent cursor-pointer transition-colors"
+                >
+                  Add Alert
+                </Button>
+              </TableCell>
+
+              <TableCell onClick={(e) => e.stopPropagation()}>
                 <CryptoWatchlistButton
                   coinId={item.coinId}
                   symbol={item.symbol}
@@ -114,5 +165,6 @@ export default function CryptoWatchlistTable({
         })}
       </TableBody>
     </Table>
+    </>
   );
 }

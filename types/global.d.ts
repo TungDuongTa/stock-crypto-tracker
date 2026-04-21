@@ -243,6 +243,27 @@ declare global {
     changePercent?: number;
     logo?: string;
   };
+
+  type CryptoAlertData = {
+    coinId: string;
+    symbol: string;
+    name: string;
+    alertName: string;
+    alertType: "greater" | "less";
+    threshold: string;
+    image?: string;
+  };
+
+  type CryptoAlert = {
+    userId: string;
+    coinId: string;
+    symbol: string;
+    name: string;
+    alertName: string;
+    alertType: "greater" | "less";
+    threshold: number;
+    image?: string;
+  };
   type OHLCData = [number, number, number, number, number];
 
   interface NextPageProps {

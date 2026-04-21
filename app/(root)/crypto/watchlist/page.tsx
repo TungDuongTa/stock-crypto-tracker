@@ -4,12 +4,15 @@ import SearchModal from "@/components/crypto/SearchModal";
 import CryptoWatchlistTable from "@/components/crypto/CryptoWatchlistTable";
 import { searchCoins } from "@/lib/actions/coingecko.actions";
 import { getCryptoWatchlistWithData } from "@/lib/actions/crypto-watchlist.actions";
+import { getUserCryptoAlerts } from "@/lib/actions/crypto-alert.actions";
+import CryptoAlertsList from "@/components/crypto/CryptoAlertsList";
 
 const CryptoWatchlistPage = async () => {
   const [watchlist, initialCoins] = await Promise.all([
     getCryptoWatchlistWithData(),
     searchCoins(),
   ]);
+  const alerts = await getUserCryptoAlerts();
 
   if (watchlist.length === 0) {
     return (
@@ -30,16 +33,30 @@ const CryptoWatchlistPage = async () => {
   }
 
   return (
-    <section className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-100">
-          Crypto Watchlist
-        </h2>
-        <SearchModal initialCoins={initialCoins} label="Add coin" />
+    <section className="grid grid-cols-1 md:grid-cols-3">
+      <div className="flex flex-col gap-6 col-span-1 md:col-span-2 mx-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-100">
+            Crypto Watchlist
+          </h2>
+          <SearchModal initialCoins={initialCoins} label="Add coin" />
+        </div>
+
+        <div className="dark-scroll">
+          <CryptoWatchlistTable watchlist={watchlist} />
+        </div>
       </div>
 
-      <div className="dark-scroll">
-        <CryptoWatchlistTable watchlist={watchlist} />
+      <div className="col-span-1 mx-2 flex gap-6 flex-col">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-100">
+            Alerts
+          </h2>
+        </div>
+
+        <div className="relative! w-full! max-h-screen overflow-auto bg-gray-800 border border-gray-600! rounded-lg! p-4 dark-scroll">
+          <CryptoAlertsList alertData={alerts} />
+        </div>
       </div>
     </section>
   );
