@@ -89,7 +89,9 @@ export const sendPriceAlertEmail = async ({
   const mailOptions = {
     from: `"Signalist Alerts" <banvirank@gmail.com>`,
     to: email,
-    subject: `🚨 Price Alert: ${company} (${symbol}) - ${alertType === "upper" ? "Above" : "Below"} Target`,
+    subject: `Price Alert: ${company} (${symbol}) - ${
+      alertType === "greater" ? "Above" : "Below"
+    } Target`,
     text: `Price alert triggered for ${company}`,
     html: htmlTemplate,
   };
