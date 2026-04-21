@@ -4,9 +4,14 @@ import Image from "next/image";
 import { Pencil, Trash2 } from "lucide-react";
 import { formatCurrency, formatChangePercent } from "@/lib/utils";
 
+type CryptoAlertCardItem = CryptoAlert & {
+  _id: string;
+  priceChange24h?: number;
+};
+
 type CryptoAlertCardProps = {
-  alert: any;
-  onEdit: (alert: any) => void;
+  alert: CryptoAlertCardItem;
+  onEdit: (alert: CryptoAlertCardItem) => void;
   onDelete: (id: string) => void;
 };
 
@@ -21,6 +26,7 @@ export function CryptoAlertCard({
 
   return (
     <div className="bg-gray-700 border border-gray-600 rounded-xl p-4 text-white shadow-lg">
+      {/* Top Row: Coin Info + Symbol/24h Change */}
       <div className="flex justify-between mb-4">
         <div className="flex gap-3 items-center">
           <div className="w-10 h-10 bg-[#2c2d31] rounded-md flex items-center justify-center overflow-hidden shrink-0">
@@ -36,16 +42,39 @@ export function CryptoAlertCard({
               <span className="text-xs font-bold text-gray-400">{symbol}</span>
             )}
           </div>
+
           <div>
             <h3 className="text-base font-medium text-gray-400">{name}</h3>
-            <p className="text-base font-medium text-gray-300 uppercase">
-              {symbol}
-            </p>
+            <p className="text-base font-medium">{symbol}</p>
           </div>
         </div>
 
         <div className="text-right">
-          <div className="flex gap-4 justify-end">
+          <p className="text-base font-medium text-gray-400 uppercase">
+            {symbol}
+          </p>
+          <p
+            className={`text-base font-medium ${
+              typeof alert.priceChange24h === "number" &&
+              alert.priceChange24h >= 0
+                ? "text-emerald-400"
+                : "text-red-500"
+            }`}
+          >
+            {typeof alert.priceChange24h === "number"
+              ? formatChangePercent(alert.priceChange24h)
+              : "--"}
+          </p>
+        </div>
+      </div>
+
+      <hr className="border-[##313234] mb-4" />
+
+      {/* Bottom Row: Alert + Actions */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <span className="text-xl text-[#CCDADC] font-medium">Alert:</span>
+          <div className="flex gap-4">
             <button
               onClick={() => onEdit(alert)}
               className="text-gray-400 hover:text-white transition-colors"
@@ -61,18 +90,6 @@ export function CryptoAlertCard({
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2 whitespace-nowrap">
-            Once per day
-          </p>
-        </div>
-      </div>
-
-      <hr className="border-[##313234] mb-4" />
-
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <span className="text-xl text-[#CCDADC] font-medium">Alert:</span>
-          <span className="text-xs text-gray-400">{alert.alertName || ""}</span>
         </div>
 
         <div className="flex items-center justify-between">
@@ -90,10 +107,8 @@ export function CryptoAlertCard({
               true,
             )}
           </p>
-          <span className="text-xs text-gray-500">
-            {typeof alert.priceChange24h === "number"
-              ? `24h: ${formatChangePercent(alert.priceChange24h)}`
-              : "aaa"}
+          <span className="bg-[#322d1d] text-[#e8c460] text-[10px] px-2 py-1 rounded font-semibold whitespace-nowrap">
+            Once per day
           </span>
         </div>
       </div>

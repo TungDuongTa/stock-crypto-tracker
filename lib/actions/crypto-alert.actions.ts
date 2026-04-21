@@ -7,7 +7,11 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Types } from "mongoose";
-
+import { fetcher } from "./coingecko.actions";
+type CoinMarketLite = {
+  id: string;
+  price_change_percentage_24h: number;
+};
 export async function createCryptoAlert(alertData: CryptoAlertData) {
   try {
     await connectToDatabase();
@@ -51,6 +55,8 @@ export async function createCryptoAlert(alertData: CryptoAlertData) {
 
 export async function getUserCryptoAlerts() {
   try {
+    await connectToDatabase();
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -63,7 +69,37 @@ export async function getUserCryptoAlerts() {
       .sort({ createdAt: -1 })
       .lean();
 
-    return JSON.parse(JSON.stringify(alerts));
+    if (alerts.length === 0) return [];
+
+    const ids = [...new Set(alerts.map((item) => item.coinId))]
+      .filter(Boolean)
+      .join(",");
+
+    let marketData: CoinMarketLite[] = [];
+    if (ids) {
+      try {
+        marketData = await fetcher<CoinMarketLite[]>("coins/markets", {
+          vs_currency: "usd",
+          ids,
+          sparkline: "false",
+          price_change_percentage: "24h",
+        });
+      } catch (error) {
+        console.error(
+          "Error fetching CoinGecko market data for alerts:",
+          error,
+        );
+      }
+    }
+
+    const marketById = new Map(marketData.map((coin) => [coin.id, coin]));
+
+    const alertsWithData = alerts.map((alert) => ({
+      ...alert,
+      priceChange24h: marketById.get(alert.coinId)?.price_change_percentage_24h,
+    }));
+
+    return JSON.parse(JSON.stringify(alertsWithData));
   } catch (error) {
     console.error("Error fetching crypto alerts:", error);
     throw new Error("Failed to fetch crypto alerts");
@@ -91,7 +127,9 @@ export async function updateCryptoAlert(
         alertName: alertData.alertName?.trim(),
         alertType: alertData.alertType,
         threshold:
-          alertData.threshold !== undefined ? Number(alertData.threshold) : null,
+          alertData.threshold !== undefined
+            ? Number(alertData.threshold)
+            : null,
       },
       { new: true },
     );
@@ -144,4 +182,3 @@ export async function getAllCryptoAlertsForPriceCheck() {
     return [];
   }
 }
-
