@@ -1,9 +1,18 @@
-import TradingViewWidget from "@/components/stock/TradingViewWidget";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/better-auth/auth";
 
-function HomePage() {
+export default async function HomePage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
+
   return (
     <div className="flex flex-col gap-20 justify-center items-center min-h-screen">
       <div className="flex flex-col items-center">
@@ -52,5 +61,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;
