@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-
+export const dynamic = "force-dynamic";
 import SearchModal from "@/components/crypto/SearchModal";
 import CryptoWatchlistTable from "@/components/crypto/CryptoWatchlistTable";
 import { searchCoins } from "@/lib/actions/coingecko.actions";
