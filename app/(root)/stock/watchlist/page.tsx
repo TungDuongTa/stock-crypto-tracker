@@ -1,5 +1,5 @@
 import { Bell, Star } from "lucide-react";
-
+export const dynamic = "force-dynamic";
 import SearchCommand from "@/components/stock/SearchCommand";
 import { getWatchlistWithData } from "@/lib/actions/watchlist.actions";
 import { WatchlistTable } from "@/components/stock/WatchlistTable";
